@@ -1,32 +1,33 @@
 #pragma once
 #include <iostream>
 #include <string>
-#include "map1.h"
+#include "map.h"
 
 using namespace std;
+
 
 class robot
 {
 private:
 
 public:
-	void randomMove(int* ary);
-	void spinMove(int* ary);
-	void zigzagMove(int* ary);
-	void printMap();
+	void randomMove(Map& map);
+	void spinMove(Map& map);
+	void zigzagMove(Map& map);
+	void printMap(Map& map);
 };
 
-void robot::printMap()
+void robot::printMap(Map& map)
 {
     const string a = "■";  //벽
     const string b = "□";  //청소하지 않은공간
     const string c = "◆"; //로봇청소기
 
-    for (int i = 0; i < MAP_SIZE; i++)
+    for (int i = 0; i < map.width; i++)
     {
-        for (int j = 0; j < MAP_SIZE; j++)
+        for (int j = 0; j < map.height; j++)
         {
-            switch (map[i][j])
+            switch (map.map[i][j])
             {
             case 0:
                 cout << b;
@@ -43,17 +44,17 @@ void robot::printMap()
     }
 }
 
-void robot::randomMove(int* ary)
+void robot::randomMove(Map& map)
 {
 
 }
 
-void robot::spinMove(int* ary)
+void robot::spinMove(Map& map)
 {
 
 }
 
-void robot::zigzagMove(int* ary)
+void robot::zigzagMove(Map& map)
 {
 
 }
