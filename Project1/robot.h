@@ -5,6 +5,8 @@
 
 using namespace std;
 
+int dx[4] = { 1,-1,0,0 };
+int dy[4] = { 0,0,1,-1 };
 
 class robot
 {
@@ -12,9 +14,9 @@ private:
     int x, y;
 public:
     robot();
-	void randomMove(Map& map);
-	void spinMove(Map& map);
-	void zigzagMove(Map& map);
+	void randomMove(Map map);
+	void spinMove(Map map);
+	void zigzagMove(Map map);
 	void printMap(Map& map);
 };
 
@@ -49,17 +51,17 @@ void robot::printMap(Map& map)
     }
 }
 
-void robot::randomMove(Map& map)
+void robot::randomMove(Map map)
 {
 
 }
 
-void robot::spinMove(Map& map)
+void robot::spinMove(Map map)
 {
 
 }
 
-void robot::zigzagMove(Map& map)
+void robot::zigzagMove(Map map)
 {
 
 }
