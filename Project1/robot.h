@@ -9,13 +9,18 @@ using namespace std;
 class robot
 {
 private:
-
+    int x, y;
 public:
+    robot();
 	void randomMove(Map& map);
 	void spinMove(Map& map);
 	void zigzagMove(Map& map);
 	void printMap(Map& map);
 };
+
+robot::robot() {
+    x = 0; y = 0;
+}
 
 void robot::printMap(Map& map)
 {
