@@ -19,5 +19,5 @@ int main()
 
 	Map m(my_map1);
 	robot a;
-	a.printMap(m);
+	a.randomMove(m, 1);
 }
