@@ -94,8 +94,10 @@ void robot::randomMove(Map map, int type)
 
             calc_cost += 3;
             time_cost++;
-            if (time_limit <= time_cost) {
-                break;
+            if (type == 1) {
+                if (time_limit <= time_cost) {
+                    break;
+                }
             }
 
             // 청소 과정 출력 (데모 동영상 용)
@@ -119,6 +121,7 @@ void robot::randomMove(Map map, int type)
 
         // 2번 : 시간제한을 두지않고 coverage 100%를 달성할 때까지 수행
         if (type == 2) {
+            // cout << coverage << endl;
             if (coverage == map_size) {
                 break;
             }
