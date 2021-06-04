@@ -23,6 +23,7 @@ public:
 	void spinMove(Map map, int type);
 	void zigzagMove(Map map, int type);
 	void printMap(Map& map);
+    void renderMap(Map& map);
 };
 
 robot::robot() {
@@ -60,6 +61,12 @@ void robot::printMap(Map& map)
     }
 }
 
+void robot::renderMap(Map& map) {
+    system("cls");
+    this->printMap(map);
+    Sleep(10);
+}
+
 void robot::randomMove(Map map, int type)
 {
     for (int i = 0; i < map.width; i++) {
@@ -70,6 +77,7 @@ void robot::randomMove(Map map, int type)
             }
         }
     }
+
     srand((unsigned)time(NULL));
 
     int calc_cost = 0; // 연산 횟수
@@ -79,31 +87,34 @@ void robot::randomMove(Map map, int type)
 
     int map_size = map.width * map.height;
 
+    // 복귀 경로
+    vector<pair<int, int> > back_path;
+    int half_time_limit = time_limit / 2;
+
     while (true) {
         int dir = rand() % 4;
         int distance = (rand() % max(map.height, map.width)) + 1;
         calc_cost += 2;
 
-        while ((distance > 0) && (map.map[this->x + dx[dir]][this->y + dy[dir]] != 1)) {
-            distance--;
-            map.map[x][y] = 3; // 청소 완료 표시
+        while ((distance-- > 0) && (map.map[this->x + dx[dir]][this->y + dy[dir]] != 1)) {
+            map.map[this->x][this->y] = 3; // 청소 완료 표시
 
             this->x += dx[dir];
             this->y += dy[dir];
-            map.map[x][y] = 2;
+            map.map[this->x][this->y] = 2;
+
+            back_path.push_back({ dx[dir] * (-1), dy[dir] * (-1) });
 
             calc_cost += 3;
             time_cost++;
             if (type == 1) {
-                if (time_limit <= time_cost) {
+                if (half_time_limit <= time_cost) {
                     break;
                 }
             }
 
             // 청소 과정 출력 (데모 동영상 용)
-            system("cls");
-            this->printMap(map);
-            Sleep(10);
+            this->renderMap(map);
         }
 
         coverage = 0;
@@ -114,18 +125,30 @@ void robot::randomMove(Map map, int type)
 
         // 1번 : 시간제한을 두고 알고리즘을 수행
         if (type == 1) {
-            if (time_limit <= time_cost) {
+            if (half_time_limit <= time_cost) {
                 break;
             }
         }
 
         // 2번 : 시간제한을 두지않고 coverage 100%를 달성할 때까지 수행
         if (type == 2) {
-            // cout << coverage << endl;
             if (coverage == map_size) {
                 break;
             }
         }
+    }
+
+    // 시작 위치 복귀
+    for (int i = back_path.size() - 1; i >= 0; i--) {
+        map.map[this->x][this->y] = 3;
+        this->x += back_path[i].first;
+        this->y += back_path[i].second;
+        map.map[this->x][this->y] = 2;
+
+        calc_cost += 3;
+        time_cost++;
+
+        this->renderMap(map);
     }
 
     cout << "맵크기 커버리지 연산횟수 소요시간" << endl;
