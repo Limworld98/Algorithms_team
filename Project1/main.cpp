@@ -5,7 +5,8 @@ using namespace std;
 
 int main()
 {
-	Map m(blueprints[15]);
+	// map , type , time
+	Map m(blueprints[0]);
 	robot a;
-	a.randomMove(m, 1);
+	a.zigzagMove(m, 1, 50);	
 }
